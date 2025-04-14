@@ -1,0 +1,45 @@
+{% extends 'gameapp/base.html' %}
+{% block content %}
+    <section class="content-section">
+        <h2>The Treasure Shop</h2>
+        <p>Your current points: <strong>{{ points }}</strong></p>
+        {% if can_download %}
+            <p>Congratulations! You've unlocked the secret treasure!</p>
+            <a class="download-btn" href="#" onclick="showPasswordPopup()">Download Treasure File</a>
+
+            <!-- Password Popup -->
+            <div id="passwordPopup" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <p>Enter the password to download the file, It's the amount of money in the cashregister of the gym website:</p>
+                    <form id="passwordForm" onsubmit="return validatePassword()">
+                        <input type="text" id="passwordInput" placeholder="Password" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <p id="errorMessage" style="color: red; display: none;">Incorrect password. Please try again.</p>
+                </div>
+            </div>
+        {% else %}
+            <p>You need 251 points to unlock the treasure. Keep playing!</p>
+        {% endif %}
+    </section>
+    <script>
+        function showPasswordPopup() {
+            document.getElementById('passwordPopup').style.display = 'block';
+        }
+
+        function validatePassword() {
+            const correctPassword = "501"; // Replace with your actual password
+            const enteredPassword = document.getElementById('passwordInput').value;
+
+            if (enteredPassword === correctPassword) {
+                alert("Password is correct! Starting download...");
+                // Redirect to the file download URL
+                window.location.href = "https://drive.google.com/uc?export=download&id=1YkSRfqXlpOR1mJOJns9nr1GbDi0GdUZX";
+                return false; // Prevent form submission
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+{% endblock %}
